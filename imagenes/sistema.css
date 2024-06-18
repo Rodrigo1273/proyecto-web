@@ -6,12 +6,11 @@
 
 body {
     font-family: Arial, sans-serif;
-    line-height: 1.6; /* Mejora la legibilidad */
 }
 
 header {
-    background-color: #282C6B;
-    color: #fff;
+    background-color: #282C6B; /* Cambia este color según tus necesidades */
+    color: #fff; /* Color del texto en la barra */
     padding: 15px 20px;
 }
 
@@ -56,13 +55,13 @@ nav ul li a {
 .hero {
     position: relative;
     text-align: center;
-    margin-top: 20px;
+    margin-top: 20px; /* Espacio debajo de la barra de navegación */
 }
 
 .carousel {
     position: relative;
     width: 100%;
-    max-height: 500px;
+    max-height: 500px; /* Ajusta la altura según tus necesidades */
     overflow: hidden;
 }
 
@@ -83,7 +82,6 @@ nav ul li a {
     transform: translate(-50%, -50%);
     color: #fff;
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
-    text-align: center;
 }
 
 .hero-text h1 {
@@ -113,7 +111,7 @@ nav ul li a {
 
 .container {
     max-width: 800px;
-    margin: 20px auto; /* Agregar espaciado superior e inferior */
+    margin: 0 auto;
     padding: 20px;
     background-color: #f4f4f4;
     border-radius: 10px;
@@ -163,3 +161,8 @@ nav ul li a {
     display: inline-block;
     margin-right: 10px;
 }
+
+
+
+
+
