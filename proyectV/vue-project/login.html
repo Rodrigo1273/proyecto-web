@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - Residencia Villaazul</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 400px;
+            margin-top: 50px;
+        }
+        body {
+            background-image: url('./imagenes/images.jpeg'); /* Cambia 'background.jpg' por la URL de tu imagen de fondo */
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="container bg-light p-5 rounded shadow">
+        <a href="index.html" class="text-secondary"><span class="oi oi-arrow-left"></span> Regresar</a>
+        <h2 class="text-center mb-4">Iniciar Sesión</h2>
+        <form @submit.prevent="submitForm">
+            <div class="form-group">
+                <label for="email">Correo electrónico:</label>
+                <input type="email" class="form-control" id="email" v-model="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña:</label>
+                <input type="password" class="form-control" id="password" v-model="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
+            <div class="text-center my-3">O</div>
+            <button type="button" class="btn btn-danger btn-block" @click="loginWithGoogle">Iniciar sesión con Google</button>
+            <button type="button" class="btn btn-secondary btn-block" @click="loginWithMicrosoft">Iniciar sesión con Microsoft</button>
+            <div class="text-center mt-3">
+                <a href="register.html">Registrarse</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <!-- jQuery y Bootstrap JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                email: '',
+                password: ''
+            },
+            methods: {
+                submitForm() {
+                    // Aquí puedes integrar la lógica para enviar el formulario de inicio de sesión
+                    console.log('Formulario enviado con email:', this.email, 'y contraseña:', this.password);
+                    // Ejemplo de integración con una API o servicio de autenticación
+                    // axios.post('url_del_endpoint', { email: this.email, password: this.password })
+                    //     .then(response => {
+                    //         // Manejar la respuesta
+                    //     })
+                    //     .catch(error => {
+                    //         // Manejar el error
+                    //     });
+                },
+                loginWithGoogle() {
+                    // Aquí puedes integrar la lógica para iniciar sesión con Google
+                    console.log('Iniciar sesión con Google');
+                },
+                loginWithMicrosoft() {
+                    // Aquí puedes integrar la lógica para iniciar sesión con Microsoft
+                    console.log('Iniciar sesión con Microsoft');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

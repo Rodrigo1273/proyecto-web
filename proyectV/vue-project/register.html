@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse - Residencia Villaazul</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app" class="container bg-light p-5 rounded shadow">
+        <h2 class="text-center mb-4">Registrarse</h2>
+        <form @submit.prevent="registerUser">
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" v-model="usuario.nombre" class="form-control" id="nombre" name="nombre" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Correo electrónico:</label>
+                <input type="email" v-model="usuario.email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña:</label>
+                <input type="password" v-model="usuario.password" class="form-control" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Registrarse</button>
+            <div class="text-center mt-3">
+                <a href="login.html">Iniciar Sesión</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Enlace a Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <!-- Agrega aquí tus scripts de lógica de Vue.js -->
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                usuario: {
+                    nombre: '',
+                    email: '',
+                    password: ''
+                }
+            },
+            methods: {
+                registerUser() {
+                    // Aquí puedes manejar la lógica para enviar los datos del usuario a través de una API
+                    // Por ejemplo, podrías utilizar axios para hacer una solicitud POST
+                    console.log('Enviando datos de registro:', this.usuario);
+                    // Aquí podrías agregar la lógica para enviar los datos a tu backend o realizar alguna acción adicional
+                    // Resetear el formulario después de enviar los datos, redirigir a otra página, etc.
+                }
+            }
+        });
+    </script>
+</body>
+</html>
