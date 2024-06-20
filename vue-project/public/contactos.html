@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Residencia Villaazul - Contactos</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Additional styles for user menu */
+        .user-menu {
+            position: relative;
+            display: inline-block;
+        }
+        .user-menu-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            min-width: 150px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+        .user-menu-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .user-menu-content a:hover {
+            background-color: #ddd;
+        }
+        .user-menu:hover .user-menu-content {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+           <!-- En index.html y contactos.html -->
+<div id="header-placeholder"></div>
+<header class="bg-primary text-white py-3">
+    <div class="container d-flex justify-content-between align-items-center">
+        <div class="menu-icon" @click="toggleMenu">
+            <span>☰ MENÚ</span>
+        </div>
+        <div class="logo">
+            <img src="./imagenes/logoTransparent2.png" alt="Logo Residencia Villaazul" class="img-fluid" style="height: 50px;">
+        </div>
+        <div>
+            <div v-if="isAuthenticated" class="user-menu">
+                <img src="./imagenes/userIco.png" alt="Usuario" style="height: 50px; cursor: pointer;">
+                <div class="user-menu-content">
+                    <a href="#" @click="logout">Cerrar Sesión</a>
+                </div>
+            </div>
+            <div v-else>
+                <a href="login.html" class="btn btn-light">Iniciar Sesión</a>
+            </div>
+        </div>
+    </div>
+    <nav id="main-nav" class="collapse bg-light" :class="{ show: menuVisible }">
+        <div class="container">
+            <ul class="nav flex-column">
+                <li class="nav-item"><a href="index.html" class="nav-link text-dark font-weight-bold">Inicio</a></li>
+                <li class="nav-item"><a href="habitaciones.html" class="nav-link text-dark font-weight-bold">Habitaciones</a></li>
+                <li class="nav-item"><a href="actividades.html" class="nav-link text-dark font-weight-bold">Actividades y Clases</a></li>
+                <li class="nav-item"><a href="informes.html" class="nav-link text-dark font-weight-bold">Informes</a></li>
+                <li class="nav-item"><a href="contactos.html" class="nav-link text-dark font-weight-bold">Contactos</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+
+        <main>
+            <div class="container my-5">
+                <h1 class="text-center text-dark mb-4">Contactos</h1>
+                <p>Para más información, por favor use el formulario de contacto en nuestra página principal o contáctenos directamente a través de los siguientes medios:</p>
+                <ul>
+                    <li>Teléfono: +123 456 789</li>
+                    <li>Email: contacto@residenciavillaazul.com</li>
+                    <li>Dirección: Calle Falsa 123, Ciudad, País</li>
+                </ul>
+            </div>
+            <div class="container my-5 p-4 bg-light rounded shadow">
+                <h1 class="text-center text-dark mb-4">Formulario de Contacto</h1>
+                <form @submit.prevent="submitForm" id="contact-form">
+                    <div class="form-group">
+                        <label for="nombre">Nombre y apellido:</label>
+                        <input type="text" class="form-control" id="nombre" v-model="formData.nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Correo electrónico:</label>
+                        <input type="email" class="form-control" id="email" v-model="formData.email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">Teléfono:</label>
+                        <input type="tel" class="form-control" id="telefono" v-model="formData.telefono" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="whatsapp">WhatsApp:</label>
+                        <input type="tel" class="form-control" id="whatsapp" v-model="formData.whatsapp">
+                    </div>
+                    <div class="form-group">
+                        <label for="estado">Estado:</label>
+                        <select class="form-control" id="estado" v-model="formData.estado" required>
+                            <option value="residencial">Residencial</option>
+                            <option value="comercial">Comercial</option>
+                            <option value="otro">Otro</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tipoVisita">Tipo de visita:</label>
+                        <div>
+                            <div class="form-check form-check-inline" v-for="tipo in tiposVisita" :key="tipo">
+                                <input class="form-check-input" type="checkbox" :id="tipo" :value="tipo" v-model="formData.tipoVisita">
+                                <label class="form-check-label" :for="tipo">{{ tipo }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="comentarios">Comentarios:</label>
+                        <textarea class="form-control" id="comentarios" rows="4" v-model="formData.comentarios" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="comoSupo">¿Cómo se enteró de nosotros?</label>
+                        <input type="text" class="form-control" id="comoSupo" v-model="formData.comoSupo">
+                    </div>
+                    <div class="form-group">
+                        <label for="contactoTiempo">¿En qué horario prefiere ser contactado?</label>
+                        <select class="form-control" id="contactoTiempo" v-model="formData.contactoTiempo" required>
+                            <option value="mañana">Mañana</option>
+                            <option value="tarde">Tarde</option>
+                            <option value="noche">Noche</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Enviar</button>
+                </form>
+            </div>
+        </main>
+        <footer class="bg-primary text-white text-center py-3">
+            <p>&copy; 2023 Residencia Villaazul. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                menuVisible: false,
+                isAuthenticated: false,
+                formData: {
+                    nombre: '',
+                    email: '',
+                    telefono: '',
+                    whatsapp: '',
+                    estado: '',
+                    tipoVisita: [],
+                    comentarios: '',
+                    comoSupo: '',
+                    contactoTiempo: ''
+                },
+                tiposVisita: ['Recorrido', 'Asesoría', 'Otro']
+            },
+            created() {
+                this.checkAuth();
+            },
+            methods: {
+                toggleMenu() {
+                    this.menuVisible = !this.menuVisible;
+                },
+                async submitForm() {
+                    try {
+                        const response = await fetch('/contact', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(this.formData)
+                        });
+                        if (response.ok) {
+                            alert('Formulario enviado correctamente');
+                            this.formData = {
+                                nombre: '',
+                                email: '',
+                                telefono: '',
+                                whatsapp: '',
+                                estado: '',
+                                tipoVisita: [],
+                                comentarios: '',
+                                comoSupo: '',
+                                contactoTiempo: ''
+                            };
+                        } else {
+                            alert('Error al enviar el formulario');
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert('Error al enviar el formulario');
+                    }
+                },
+                checkAuth() {
+                    const user = localStorage.getItem('user');
+                    if (user) {
+                        this.isAuthenticated = true;
+                    } else {
+                        this.isAuthenticated = false;
+                    }
+                },
+                logout() {
+                    localStorage.removeItem('user');
+                    this.isAuthenticated = false;
+                }
+            }
+        });
+    </script>
+    <!-- En index.html y contactos.html -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script>
+    $(function() {
+        // Cargar el header dinámicamente
+        $("#header-placeholder").load("./header.html", function() {
+            // Luego de cargar el header, inicializar Vue.js o cualquier otro código necesario
+            new Vue({
+                el: '#app',
+                data: {
+                    menuVisible: false,
+                    isAuthenticated: false,
+                    formData: {
+                        // Datos del formulario para contactos.html
+                    },
+                    tiposVisita: ['Recorrido', 'Asesoría', 'Otro']
+                },
+                created() {
+                    this.checkAuth();
+                },
+                methods: {
+                    toggleMenu() {
+                        this.menuVisible = !this.menuVisible;
+                    },
+                    async submitForm() {
+                        // Método para enviar formulario en contactos.html
+                    },
+                    checkAuth() {
+                        const user = localStorage.getItem('user');
+                        if (user) {
+                            this.isAuthenticated = true;
+                        } else {
+                            this.isAuthenticated = false;
+                        }
+                    },
+                    logout() {
+                        localStorage.removeItem('user');
+                        this.isAuthenticated = false;
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<header class="bg-primary text-white py-3">
+    <div class="container d-flex justify-content-between align-items-center">
+        <div class="menu-icon" @click="toggleMenu">
+            <span>☰ MENÚ</span>
+        </div>
+        <div class="logo">
+            <img src="./imagenes/logoTransparent2.png" alt="Logo Residencia Villaazul" class="img-fluid" style="height: 50px;">
+        </div>
+        <div>
+            <div v-if="isAuthenticated" class="user-menu">
+                <img src="./imagenes/userIco.png" alt="Usuario" style="height: 50px; cursor: pointer;">
+                <div class="user-menu-content">
+                    <a href="#" @click="logout">Cerrar Sesión</a>
+                </div>
+            </div>
+            <div v-else>
+                <a href="login.html" class="btn btn-light">Iniciar Sesión</a>
+            </div>
+        </div>
+    </div>
+    <nav id="main-nav" class="collapse bg-light" :class="{ show: menuVisible }">
+        <div class="container">
+            <ul class="nav flex-column">
+                <li class="nav-item"><a href="index.html" class="nav-link text-dark font-weight-bold">Inicio</a></li>
+                <li class="nav-item"><a href="habitaciones.html" class="nav-link text-dark font-weight-bold">Habitaciones</a></li>
+                <li class="nav-item"><a href="actividades.html" class="nav-link text-dark font-weight-bold">Actividades y Clases</a></li>
+                <li class="nav-item"><a href="informes.html" class="nav-link text-dark font-weight-bold">Informes</a></li>
+                <li class="nav-item"><a href="contactos.html" class="nav-link text-dark font-weight-bold">Contactos</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>

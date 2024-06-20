@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - Residencia Villaazul</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 400px;
+            margin-top: 50px;
+        }
+        body {
+            background-image: url('./imagenes/images.jpeg'); /* Cambia 'background.jpg' por la URL de tu imagen de fondo */
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="container bg-light p-5 rounded shadow">
+        <a href="index.html" class="text-secondary"><span class="oi oi-arrow-left"></span> Regresar</a>
+        <h2 class="text-center mb-4">Iniciar Sesión</h2>
+        <form @submit.prevent="submitForm">
+            <div class="form-group">
+                <label for="email">Correo electrónico:</label>
+                <input type="email" class="form-control" id="email" v-model="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña:</label>
+                <input type="password" class="form-control" id="password" v-model="password" required>
+            </div>
+            <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+            <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
+            <div class="text-center mt-3">
+                <a href="register.html">Registrarse</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <!-- Axios para manejar solicitudes HTTP -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                email: '',
+                password: '',
+                errorMessage: ''
+            },
+            methods: {
+                async submitForm() {
+                    try {
+                        const response = await axios.post('/login', {
+                            email: this.email,
+                            password: this.password
+                        });
+
+                        if (response.data.success) {
+                            // Guardar información del usuario en localStorage
+                            localStorage.setItem('user', JSON.stringify({ username: response.data.username }));
+                            window.location.href = 'index.html'; // Redirigir al index.html
+                        } else {
+                            this.errorMessage = response.data.message;
+                        }
+                    } catch (error) {
+                        this.errorMessage = error.response.data.message || 'Error al iniciar sesión';
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
